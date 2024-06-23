@@ -1,94 +1,55 @@
 
 
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import Listagent from './List';
+import React from 'react'
+import { classNames } from '../../Shared/Util'
 
-const Agents = (props) => {
-    console.log("lllllllllllllll, prorps", props);
-    if (!props) return "ຊອກຫາຂໍ້ມູນບໍ່ເຫັນ!";
+const Listagent = (props) => {
 
-    const { listagent } = props;
-    console.log("uuuuuuuuuuuuuu", listagent);
-
-
-
-    // const getAgent = async () =>{
-    //     return await axios.get(
-    //     'http://localhost:8000/api/v1/user/',
-    //     {},
-    //     {
-    //         headers:{
-    //             "content-Type": "application/json"
-    //         }
-    //     }
-    //     )
-    // }
-
-    // const [agent, setAgent] = useState([]);
-
-    // useEffect(() => {
-    //     _getAgent();
-    // }, []);
-
-    // const _getAgent = async () =>{
-    //     await getAgent()
-    //     .then((result) =>{
-    //         console.log("rrrrrrrrrrrrr",result)
-    //         if (result && result.status === 200){
-    //             setAgent(result.data.results)
-    //         }
-    //     }).catch((error) => {})
-    // }
+    const { id, username, email, role, is_active } = props
 
     return (
-        <div>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className=" w-full text-gray-500 dark:text-gray-900">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-900">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
-                                ID
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Username
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Email
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Role
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Status
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {[listagent].map((item, i) => {
-                            console.log("data from datdabase", item)
-                            return (
-                                <Listagent
-                                    key={i}
-                                    id={item.id}
-                                    username={item.username}
-                                    email={item.email}
-                                    role={item.is_staff ? "Agent" : "Customer"}
-                                    is_active={item.is_active ? "Active" : "Inactive"}
-                                />
-                            );
-                        })}
+        <>
+            <tr className=" text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    <h1>{id}</h1>
+                </td>
+                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    <h1>{username}</h1>
+                </td>
+                <td className="px-6 py-4">
+                    {email}
+                </td>
+                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    <h1 className={classNames(
+                        role.startsWith("Agent") ? "  text-blue-700 px-3 py-1 uppercase font-bold text-xs" : null,
+                        role.startsWith("Customer") ? " text-pink-600 px-3 py-1 uppercase font-bold text-xs" : null
+                    )}>{role}</h1>
+                </td>
+                <td className=" w-20 px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    <h1 className={classNames(
+                        is_active.startsWith("Active") ? " bg-green-100 text-green-700 px-3 py-1 uppercase leading-wide font-bold text-xs rounded-full shadow-sm" : null,
+                        is_active.startsWith("Inactive") ? "bg-red-100 text-red-700 px-3 py-1 uppercase leading-wide font-bold text-xs rounded-full shadow-sm" : null
+                    )}>{is_active}</h1>
+                </td>
+                <td className="px-6 py-2 space-x-1" >
 
-                    </tbody>
-                </table>
-            </div>
+                    <a
+                        href="#"
+                        className=" bg-green-500 text-white px-3 py-1 uppercase leading-wide font-bold text-xs rounded-sm shadow-sm "
+                    >
+                        Edit
+                    </a>
+                    <a
+                        href="#"
+                        className="w-20 bg-red-500 text-white px-3 py-1 uppercase leading-wide font-bold text-xs rounded-sm shadow-sm"
+                    >
+                        Remove
+                    </a>
+                </td>
+            </tr>
+        </>
 
-
-        </div>
     )
 }
 
-export default Agents
+export default Listagent;
